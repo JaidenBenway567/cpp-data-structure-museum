@@ -1,15 +1,3 @@
-// ===========================================================================
-//  main.cpp  --  GIVEN TO YOU.
-//
-//  This is the museum itself. It runs the 19 checks, and then the race.
-//
-//  DO NOT CHANGE THIS FILE, with exactly ONE exception: the single marked
-//  line below that holds your personal starting Vault capacity. That one line
-//  you MUST change. Everything else stays as it is.
-//
-//  Do not put your name or email in this file.
-// ===========================================================================
-
 #include <iostream>
 #include <iomanip>
 #include <string>
@@ -21,25 +9,8 @@
 
 using namespace std;
 
-// ===========================================================================
-//  >>>>>>>>>>>>>>>>  YOUR PERSONAL STARTING CAPACITY  <<<<<<<<<<<<<<<<
-//
-//  Add up the last four digits of your student ID.
-//      Example: an ID ending 7822  ->  7 + 8 + 2 + 2  =  19
-//
-//  Put YOUR number on the line below. It is handed to the Vault constructor,
-//  so your resizing happens at your own n and your race numbers are your own.
-//
-//  Do NOT copy 19 unless 19 is genuinely your number.
-//  Do NOT put this number inside vault.h. The Vault must use whatever
-//  capacity it is handed, not a number it already knows.
-// ===========================================================================
-const int START_CAPACITY = 13;      // <-- CHANGE 19 TO YOUR OWN NUMBER
 
-
-// ---------------------------------------------------------------------------
-//  Check bookkeeping
-// ---------------------------------------------------------------------------
+const int START_CAPACITY = 13;    
 static int passedCount = 0;
 static int failedCount = 0;
 
@@ -50,7 +21,6 @@ static void check(int number, const string& what, bool ok)
     if (ok) passedCount++; else failedCount++;
 }
 
-// A few exhibits to play with.
 static Exhibit sample(int i)
 {
     return Exhibit("Item", 1900 + (i % 100), 10.0 + i);
@@ -273,12 +243,8 @@ static void checkCorridor()
               c.at(2).getName() == "N");
     }
 
-    // 18. a long chain stays in one piece
-    //
+  
     //  NOTE: there is deliberately no check here for the Corridor destructor.
-    //  The final CLEAN / LEAK report at the end of the program is what proves
-    //  it, and section 8 of RESULTS.txt asks you to break that destructor on
-    //  purpose - which would be impossible if it also stopped the race.
     {
         Corridor<Exhibit> c;
         for (int i = 0; i < 50; i++) c.pushBack(sample(i));
@@ -308,16 +274,6 @@ static void checkCorridor()
     }
 }
 
-
-// ===========================================================================
-//  THE FOUR MUSEUM JOBS
-//
-//  Every job is written ONCE, as a template, and run on both designs. Neither
-//  design gets an easier version of the job than the other.
-// ===========================================================================
-
-// Fill a box with n exhibits, then zero the step counter, so that only the
-// job itself is measured and not the loading.
 template <typename BoxType>
 static void loadBox(BoxType& box, int n)
 {
