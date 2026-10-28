@@ -1,40 +1,7 @@
-// ===========================================================================
-//  corridor.h  --  PART 3.  YOU WRITE THIS FILE.
-//
-//  Your full name : Jaiden Benway
-//  Vandal email   : benw5602@vandals.uidaho.edu
-//
-//  ---------------------------------------------------------------------------
-//  CONTRACTOR B's design: A CHAIN OF SMALL ROOMS.
-//
-//      first
-//        |
-//        v
-//      [ A | * ] --> [ B | * ] --> [ C | 0 ]
-//
-//  Each Room holds ONE item and a door (a pointer) to the next Room.
-//  The last Room's door points to nullptr. There are no room numbers.
-//
-//  "Want to add a room at the start? I just build it and point the door.
-//   Nothing else moves."
-//
-//  The price: to reach room number N you must WALK. Start at the first room
-//  and go through one door at a time until you arrive.
-//
-//  It is also a TEMPLATE, like the Vault. Write it once, and it works for
-//  Corridor<Exhibit> and Corridor<int> alike.
-// ===========================================================================
-
 #ifndef CORRIDOR_H
 #define CORRIDOR_H
-
 #include "counters.h"
 
-// ---------------------------------------------------------------------------
-//  One room. Holds one item, and one door to the next room.
-//  This is a struct on purpose: the Corridor is the only thing that touches
-//  it, so there is nothing to hide from.
-// ---------------------------------------------------------------------------
 template <typename T>
 struct Room
 {
@@ -67,17 +34,6 @@ public:
         cursor = 0;
     }
 
-    // -- destructor --------------------------------------------------------
-    //
-    //  THE MOST IMPORTANT FIVE LINES IN THIS FILE. READ THEM TWICE.
-    //
-    //  You are standing in a room, and the ONLY way to the rest of the
-    //  corridor is the door in this room. If you knock this room down first,
-    //  you have destroyed the door too, and everything past it is lost
-    //  forever - still allocated, still taking memory, unreachable.
-    //
-    //      SAVE THE NEXT POINTER BEFORE YOU DELETE THE CURRENT ROOM.
-    //
     ~Corridor()
     {
         Room<T>* here = first;
