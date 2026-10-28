@@ -1,0 +1,204 @@
+===========================================================================
+ RESULTS.txt   --   PART 4.   FILL THIS IN AFTER ALL 19 CHECKS PASS.
+===========================================================================
+
+Every number below must come from YOUR OWN final run, with YOUR starting
+capacity. Do not copy another student's table. Your capacity changes when
+your Vault resizes, so your numbers are not supposed to match anyone else's.
+
+If the checks are not all passing, the race did not run and you have nothing
+to put here yet. Go back and fix them first.
+
+
+---------------------------------------------------------------------------
+ 1.  WHO YOU ARE
+---------------------------------------------------------------------------
+
+Full name     : Jaiden Benway
+Vandal email  : benw5602@vandals.uidaho.edu
+
+Starting Vault capacity (sum of last 4 ID digits) used in this run : 13
+
+
+---------------------------------------------------------------------------
+ 2.  THE CHECKS
+---------------------------------------------------------------------------
+
+Paste the line your program printed:
+
+    19 of 19 checks passed.
+
+
+---------------------------------------------------------------------------
+ 3.  YOUR FOUR TABLES   (paste them straight from your own run)
+---------------------------------------------------------------------------
+
+Job 1 - Load from the front
+         n        Vault steps    Corridor steps
+      1000            502391              1000
+      2000           2004809              2000
+      4000           8009647              4000
+
+Job 2 - Look up every item
+         n        Vault steps    Corridor steps
+      1000              1000            500500
+      2000              2000           2001000
+      4000              4000           8002000
+
+Job 3 - 200 inserts in the middle
+         n        Vault steps    Corridor steps
+      1000            110200            109900
+      2000            210200            209900
+      4000            410200            409900
+
+Job 4 - Walk once and total
+         n        Vault steps    Corridor steps
+      1000              1000              1000
+      2000              2000              2000
+      4000              4000              4000
+
+
+---------------------------------------------------------------------------
+ 4.  WHAT HAPPENS WHEN n DOUBLES
+---------------------------------------------------------------------------
+
+For each column, look at 2000 -> 4000 and divide. Then write SAME, DOUBLE,
+or QUADRUPLE, and the Big-O that goes with it.
+
+    stays about the same  ->  O(1)
+    roughly doubles       ->  O(n)
+    roughly quadruples    ->  O(n^2)
+
+                          4000 / 2000      SAME/DOUBLE/QUADRUPLE      Big-O
+  Job 1  Vault		      3.9		  Quadruple	      O(n^2)	
+  Job 1  Corridor 	      2.0		    Double		O(n)
+  Job 2  Vault		      2.0		    Double		O(n)
+  Job 2  Corridor	      3.9		  Quadruple	      O(n^2)
+  Job 3  Vault		      1.9		    Double		O(n)
+  Job 3  Corridor	      1.9		    Double		O(n)
+  Job 4  Vault		      2.0		    Double		O(n)
+  Job 4  Corridor	      2.0 		    Double		O(n)
+
+Show one of those divisions in full, so it is clear where the word came from:
+
+    Job 1 , vault :   8009647 / 2004809  =  3.99   ->  Quadruple
+
+
+---------------------------------------------------------------------------
+ 5.  YOUR PREDICTIONS, CHECKED
+---------------------------------------------------------------------------
+
+Go back to section 5 of PLAN.txt. Do not edit it. Compare it to what you
+just measured.
+
+5(a) Job 1 - what did you predict, and what happened?
+	I predicted that the corridor's number will stay the same but the vault's number will double. 
+	What actually happened was that the corridor's doubled, and the vault quadrupled.
+
+5(b) Job 2 - what did you predict, and what happened?
+	I predicted that the vault's number will stay the same, but the corridor's number will double.
+	What actually happened was that the vault doubled and the corridor quadrupled.
+
+5(c) Anything that surprised you? If nothing surprised you, say that.
+	I'm not entirely shocked, I understood the concept but assumed that the winners would stay
+	the same rather than increasing as well.
+
+
+---------------------------------------------------------------------------
+ 6.  WHY EACH DESIGN WON WHAT IT WON
+---------------------------------------------------------------------------
+
+Do not answer with the words "arrays are fast" or "linked lists are fast".
+Answer with what the code physically had to do.
+
+6(a) Job 1 went to corridor. Explain it by describing what the LOSER had
+     to do to every item it was already holding.
+	The vault lost because it had to shift all of the
+	values to the right before it could insert.
+
+
+6(b) Job 2 went to vault. Explain it by describing what the LOSER had
+     to do before it could answer "where is exhibit 900?".
+	The corridor lost because it had to look through all of the rooms
+	till it found what it was looking for.
+
+
+6(c) Job 3 was close. WHY was it close? What does EACH design have to do to
+     insert in the middle, and why does that work out to about the same
+     amount of work?
+	Job 3 was close because the corridor had to walk through the first half BEFORE 
+	it could insert, and the vault had to shift half of the values before it could insert.
+	They are both going through roughly the same amount of values.
+
+
+6(d) Job 4 was a tie, or very nearly. Why does neither design have an
+     advantage when you simply walk through everything once?
+	Job 6 was a tie because they both have to look at every single value before adding it up.
+	They are both doing basically the same thing just in a different way. It doesn't change the amount of work.
+
+6(e) Look at your Job 1 Vault number. Part of it is sliding items along, and
+     part of it is copying during growth. Which part is bigger, and why?
+	Sliding is bigger because inserting at the front or middle requires it to move many items 
+	whereas growth only copies the existing items when the array becomes full.
+
+---------------------------------------------------------------------------
+ 7.  YOUR RECOMMENDATION TO THE MUSEUM
+---------------------------------------------------------------------------
+
+The museum cannot build both. Pick one, and defend it.
+
+7(a) Which contractor gets the job?
+	Contractor B with the corridor.
+
+7(b) What did you assume about how the museum actually uses its catalogue to
+     make that call? (a catalogue that is mostly looked up is a different
+     problem from one that is mostly added to at the front)
+	I assumed that the museum is constantly adding new items, and it would be much faster to catalogue
+	new things if inserting is easier.
+
+7(c) Name one thing your chosen design will be BAD at, and say what the
+     museum should do about it.
+	This design is bad at finding specific items within the catalogue. The museum should maybe
+	split it into multiple corridors (multiple linked lists), or add signs that help point you to a specific area so it's a bit 
+	faster (pointer).
+
+---------------------------------------------------------------------------
+ 8.  THE MEMORY EXPERIMENT   (break it on purpose, then put it back)
+---------------------------------------------------------------------------
+
+Do this last.
+
+  1. Open corridor.h and comment out the BODY of the Corridor destructor.
+     Leave the destructor itself there, just empty.
+  2. Rebuild:   g++ -std=c++11 -Wall -o museum main.cpp counters.cpp
+  3. Run it.
+  4. Write the numbers below.
+  5. PUT THE DESTRUCTOR BODY BACK. Rebuild. Confirm CLEAN again.
+
+8(a) With the destructor emptied, the final report said:
+
+     Arrays still alive : 0
+     Rooms  still alive : 28673
+
+8(b) That rooms number is in the tens of thousands. Where did all those
+     rooms come from? (think about how many corridors the program builds)
+	The rooms came from all the corridor objects the program made. The destructor deletes each room
+	but when the destructor is empty none of the rooms are freed, so the rooms from all the corridors added up to 28,673 still alive.
+
+8(c) In one sentence: what is a memory leak?
+	A memory leak is when you don't delete the memory that was allocated, so when the program ends
+	all the data is just floating around.
+
+8(d) With the destructor put back, the final report says:
+
+     Arrays still alive : 0
+     Rooms  still alive : 0
+     CLEAN. Everything you built, you took down.
+
+8(e) I confirm I restored the Corridor destructor and rebuilt:   YES 
+
+===========================================================================
+ Before you zip: is every number above from the SAME run as the code you
+ are submitting? If you changed the code after copying these numbers, run
+ it once more and copy them again.
+===========================================================================
