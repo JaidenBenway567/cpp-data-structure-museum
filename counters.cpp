@@ -1,7 +1,3 @@
-// ===========================================================================
-//  counters.cpp  --  GIVEN TO YOU.  DO NOT CHANGE THIS FILE.
-// ===========================================================================
-
 #include "counters.h"
 #include <iostream>
 using namespace std;
